@@ -172,7 +172,7 @@
         @$panels.eq(3).css
           clip: "rect(0px, #{scrubberLeft}, #{scrubberTop}, 0px)"
 
-    animate: (x, y, duration = @options.transitionDuration, timing = @options.transitionTiming) ->
+    animate: (x, y, duration = @options.transitionDuration, timing = @options.transitionTiming, callback) ->
       # enable css transitions
       @$scrubber.css
         transitionProperty: 'left, top'
@@ -188,6 +188,11 @@
       @options.position.y = y
       @_positionScrubber x, y
       @_clipPanels x, y
+
+      if callback?
+        setTimeout =>
+          callback()
+        , duration * 1000
 
     refresh: ->
       # set position
